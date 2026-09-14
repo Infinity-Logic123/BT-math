@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+build/
+.env
+.env*.local
+*.db
+*.db-journal
+uploads/*
+!uploads/.gitkeep
+emails.log
+*.tsbuildinfo
+next-env.d.ts
+coverage/

@@ -1,0 +1,41 @@
+# SQLite (default) profile:
+#   docker compose up -d --build
+# PostgreSQL profile: uncomment the db service + app.environment block,
+# switch prisma provider to "postgresql" and run: npx prisma migrate dev
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@thebtmath.com}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-ChangeMe!2026}
+      - SEED_DEMO_DATA=false
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY:-}
+      - YOUTUBE_CHANNEL_ID=${YOUTUBE_CHANNEL_ID:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_FROM=${SMTP_FROM:-The BT Math <no-reply@thebtmath.com>}
+    volumes:
+      - app-data:/app/prisma
+      - app-uploads:/app/uploads
+    restart: unless-stopped
+
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: btmath
+  #     POSTGRES_PASSWORD: change-me
+  #     POSTGRES_DB: btmath
+  #   volumes:
+  #     - pg-data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+
+volumes:
+  app-data:
+  app-uploads:
+  # pg-data:
